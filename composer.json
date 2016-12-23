@@ -1,8 +1,8 @@
 {
-    "name": "jenssegers/date",
-    "description": "A date library to help you work with dates in different languages",
+    "name": "notegame/date",
+    "description": "A date library to help you work with dates in different languages fix for support buddhist year",
     "keywords": ["laravel", "date", "time", "datetime", "i18n", "translation", "carbon"],
-    "homepage": "https://github.com/jenssegers/date",
+    "homepage": "https://github.com/notegame/date",
     "license" : "MIT",
     "authors": [
         {
