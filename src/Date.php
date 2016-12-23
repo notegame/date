@@ -24,6 +24,8 @@ class Date extends Carbon
      */
     protected static $fallbackLocale = 'en';
 
+    protected static $buddhist = false;
+
     /**
      * The errors that can occur.
      *
@@ -208,7 +210,7 @@ class Date extends Carbon
             $character = $format[$i];
 
             // Check if we can replace it with a translated version.
-            if (in_array($character, ['D', 'l', 'F', 'M'])) {
+            if (in_array($character, ['D', 'l', 'F', 'M', 'Y'])) {
                 // Check escaped characters.
                 if ($i > 0 and $format[$i - 1] == '\\') {
                     continue;
@@ -244,6 +246,23 @@ class Date extends Carbon
                 // Short notations.
                 if (in_array($character, ['D', 'M'])) {
                     $translated = mb_substr($translated, 0, 3);
+                }
+
+                if (in_array($character, ['Y'])) {
+
+                    $year = parent::format($character);
+
+                    if($this->getLocale()=="th"){
+                        if($year < 2300 && static::$buddhist){
+                            $year += 543;
+                        }
+                    }else{
+                        if($year > 2300 && static::$buddhist){
+                            $year -= 543;
+                        }
+                    }
+
+                    $translated=$year;
                 }
 
                 // Add to replace list.
@@ -373,6 +392,11 @@ class Date extends Carbon
         // Set locale and load translations.
         static::getTranslator()->setLocale($locale);
         static::getTranslator()->addResource('array', require $resource, $locale);
+    }
+
+    public static function setBuddhist($data=true)
+    {
+        static::$buddhist = $data;
     }
 
     /**
