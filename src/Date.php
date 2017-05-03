@@ -18,7 +18,7 @@ class Date extends Carbon
     protected static $translator;
 
     /**
-     * The fallback locale when a locale is not available.
+     * The fallback locale when a locale is not available.M
      *
      * @var string
      */
@@ -245,7 +245,13 @@ class Date extends Carbon
 
                 // Short notations.
                 if (in_array($character, ['D', 'M'])) {
-                    $translated = mb_substr($translated, 0, 3);
+                    if($this->getLocale()=="th"){
+                        $translated = $lang->transChoice('short_'.strtolower($key), $choice);
+                    }else{
+                        
+                        $translated = mb_substr($translated, 0, 3);
+                        
+                    }
                 }
 
                 if (in_array($character, ['Y'])) {
